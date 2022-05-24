@@ -1,0 +1,117 @@
+// Белова Ольга Александровна, элб-4, В-2
+
+#include <iostream>
+#include <cmath>
+#include <ctime>
+
+using namespace std;
+
+const int m=6, n=5;
+void BO_random_vvod(double mas[m][n]);
+void BO_random_vivod(double mas[m][n]);
+void BO_vvod_myself(double mas[m][n]);
+void BO_vivod_myself(double mas[m][n]);
+
+
+void BO_random_vvod(double mas[m][n])
+{
+    srand(time(NULL));
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++) {
+    mas[i][j] = 1. * rand() / RAND_MAX;
+    }
+}
+
+void BO_random_vivod(double mas[m][n])
+{
+    cout.setf(ios::fixed);
+    cout << "Array"<< ":" << endl;
+    for (int i = 0; i < m; i++){
+        for (int j = 0; j < n; j++){
+            cout.width(6);
+            cout.precision(2);
+            cout << mas[i][j];
+        }
+        cout << endl;
+}
+    cout.unsetf(ios::fixed);
+}
+void BO_vvod_myself(double mas[m][n])
+{
+    cout << "Enter elements of array" << endl;
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++)
+        cin >> mas[i][j];
+        cout << endl;
+}
+}
+
+void BO_vivod_myself(double mas[m][n])
+{
+    cout.setf(ios::fixed);
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++){
+            cout.width(6);
+            cout.precision(2);
+        cout << mas[i][j];
+        }
+        cout << endl;
+}
+    cout.unsetf(ios::fixed);
+}
+
+
+
+int main()
+{
+    int ans;
+    cout << "The array will be from:" << endl;
+    cout << "1. Your choice" << endl;
+    cout << "2. Randomly from the range [0; 1]" << endl;
+    cout << "Your choice: ";
+    cin >> ans;
+    cout << endl;
+    if (ans == 1) {
+    double B[m][n];
+        BO_vvod_myself(B);
+        BO_vivod_myself(B);
+    }
+    else {
+    if (ans == 2) {
+        double B[m][n];
+        BO_random_vvod(B);
+        BO_random_vivod(B);
+    }
+    }
+    cout << endl;
+    double mas[m][n];
+    double masMax[m];
+    double max = 0, sum;
+       cout << "Auxiliary array: " << endl;
+    for (int j = 0; j < m; j++){
+        max = mas[0][j];
+        for (int i = 0; i < n - 1; i++){
+            if (mas[i][j] > max)
+            max = mas[i][j];
+        }
+        masMax[j] = max;
+        max = 0;
+    }
+    for (int i = 0; i < n; i++){
+        cout << masMax[i] << " ";
+    }
+    cout << endl << endl;
+    for(int i = 0; i < n; i++){
+    sum = sum + masMax[i];
+    }
+cout << "The sum of the largest elements of each column = " << sum << endl;
+return 0;
+}
+
+    
+    
+    
+    
+    

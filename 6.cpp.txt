@@ -1,0 +1,279 @@
+// Белова Ольга Александровна, элб-4
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct dateBO {
+    char date[11];
+};
+
+struct BO {
+    char markaBO[100], numberBO[12];
+    dateBO date[11];
+    double weightBO, priceBO;
+};
+
+void BO_InputData(BO* mBO, int N);
+void BO_OutputData(BO* mBO, int N);
+void BO_InputData(BO** mBO, int* N);
+void BO_SortData(BO* mBO, int N);
+void BO_OutputData(BO* mBO, int* N);
+bool BO_DateCompare(char date1[11], char date2[11]);
+
+int main() {
+    setlocale(LC_ALL, "Russian");
+    int N, c;
+    cout << "Enter number of elements (N>=1): ";
+    cin >> N;
+    BO* mBO = new BO[N];
+    while (true)
+    {
+        cout << "Menu :" << endl;
+        cout << "1. Data input" << endl;
+        cout << "2. Data output" << endl;
+        cout << "3. Add element" << endl;
+        cout << "4. Sort Data " << endl;
+        cout << "5. Criteria Output" << endl;
+        cout << "6. Exit programm" << endl;
+        cout << "Select function: ";
+        cin >> c;
+        switch (c) {
+        default:
+            cout << "Error" << endl;
+            break;
+        case 1: {
+            BO_InputData(mBO, N);
+            break;
+        }
+        case 2: {
+            BO_OutputData(mBO, N);
+            break;
+        }
+        case 3: {
+            BO_InputData(&mBO, &N);
+            break;
+        }
+        case 4: {
+            BO_SortData(mBO, N);
+            break;
+        }
+        case 5: {
+            BO_OutputData(mBO, &N);
+            break;
+        }
+        case 6: exit(0);
+        }
+    }
+    return 0;
+}
+
+void BO_InputData(BO* mBO, int N) {
+    for (int i = 0; i < N; i++) {
+        int ans;
+        cout << "Регистрационный номер машины - ";
+        cin.ignore(32767, '\n');
+        cin.getline(mBO[i].numberBO, 12);
+        cout << "Выберите марку машины \n1) BMW \n2) Audi\n3) Ford\n4) Kia\n";
+        cout << "Ваш выбор: ";
+        cin >> ans;
+        switch (ans) {
+        case 1:
+                strcpy(mBO[i].markaBO, "BMW");
+            break;
+        case 2:
+                strcpy(mBO[i].markaBO, "Audi");
+            break;
+        case 3:
+                strcpy(mBO[i].markaBO, "Ford");
+            break;
+        case 4:
+                strcpy(mBO[i].markaBO, "Kia");
+            break;
+        }
+        cout << "Дата(Формата ДД/ММ/ГГГГ) - ";
+        cin.ignore(32767, '\n');
+        cin.getline(mBO[i].date->date, 11);
+        cout << "Вес (килограммы) - ";
+        cin >> mBO[i].weightBO;
+        if (strcmp(mBO[i].markaBO, "BMW") == 0) {
+            mBO[i].priceBO = 45.7;
+        }
+        else {
+            if (strcmp(mBO[i].markaBO, "Audi") == 0) {
+                mBO[i].priceBO = 48.7;
+            }
+            else {
+                if (strcmp(mBO[i].markaBO, "Ford") == 0) {
+                    mBO[i].priceBO = 36.3;
+                }
+                else {
+                    if (strcmp(mBO[i].markaBO, "Kia") == 0) {
+                        mBO[i].priceBO = 34.9;
+                    }
+                }
+            }
+        }
+        cout << endl;
+    }
+}
+void BO_OutputData(BO* mBO, int N) {
+    cout.fixed;
+    cout << "Регистрационный номер машины ";
+    cout << " | ";
+    cout << "Марка ";
+    cout << " | ";
+    cout << "Дата(Формата ДД/ММ/ГГГГ) ";
+    cout << " | ";
+    cout << "Вес ";
+    cout << " | ";
+    cout << "Стоимость тех осмотра ";
+    cout << endl;
+    for (int i = 0; i < N; i++)
+    {
+        cout.width(2);
+        cout << i + 1 << ". ";
+        cout.width(16);
+        cout << mBO[i].numberBO;
+        cout.width(16);
+        cout << mBO[i].markaBO;
+        cout.width(22);
+        cout << mBO[i].date->date;
+        cout.width(15);
+        cout << mBO[i].weightBO;
+        cout.width(14);
+        cout << mBO[i].priceBO;
+        cout << endl;
+    }
+    system("pause");
+}
+void BO_InputData(BO** mBO, int* N) {
+    BO* buff = new BO[*N + 1];
+    for (int i = 0; i < *N; i++) {
+        buff[i] = (*mBO)[i];
+    }
+    int ans;
+    cout << "Регистрационный номер машины - ";
+    cin.ignore(32767, '\n');
+    cin.getline(buff[*N].numberBO, 12);
+    cout << "Выберите марку машины \n1) BMW \n2) Audi\n3) Ford\n4) Kia\n";
+    cout << "Ваш выбор: ";
+    cin >> ans;
+    switch (ans) {
+    case 1:
+            strcpy(buff[*N].markaBO, "BMW");
+        break;
+    case 2:
+            strcpy(buff[*N].markaBO, "Audi");
+        break;
+    case 3:
+            strcpy(buff[*N].markaBO, "Ford");
+        break;
+    case 4:
+            strcpy(buff[*N].markaBO, "Kia");
+        break;
+    }
+    cout << "Дата(Формата ДД/ММ/ГГГГ) - ";
+    cin.ignore(32767, '\n');
+    cin.getline(buff[*N].date->date, 11);
+    cout << "Вес (килограммы) - ";
+    cin >> buff[*N].weightBO;
+    if (strcmp(buff[*N].markaBO, "BMW") == 0) {
+        buff[*N].priceBO = 45.7;
+    }
+    else {
+        if (strcmp(buff[*N].markaBO, "Audi") == 0) {
+            buff[*N].priceBO = 48.7;
+        }
+        else {
+            if (strcmp(buff[*N].markaBO, "Ford") == 0) {
+                buff[*N].priceBO = 36.3;
+            }
+            else {
+                if (strcmp(buff[*N].markaBO, "Kia") == 0) {
+                    buff[*N].priceBO = 34.9;
+                }
+            }
+        }
+    }
+    cout << endl;
+    *mBO = buff;
+    (*N)++;
+}
+
+void BO_SortData(BO* mBO, int N) {
+    for (int i = 0; i < N - 1; i++) {
+        for (int j = 0; j < N - i - 1; j++)
+            if (strcmp(mBO[j].numberBO, mBO[j + 1].numberBO) < 0) {
+                swap(mBO[j], mBO[j + 1]);
+            }
+    }
+    BO_OutputData(mBO, N);
+}
+
+void BO_OutputData(BO* mBO, int* N) {
+    double weight;
+    char date[11];
+    cout << "Введите критерии:" << endl;
+    cout << "Вес должен быть меньше, чем - ";
+    cin >> weight;
+    cout << "Дата тех осмотра должна быть позже - ";
+    cin.ignore(32767, '\n');
+    cin.getline(date, 11);
+    cout.fixed;
+    cout << "Регистрационный номер машины ";
+    cout << " | ";
+    cout << "Марка ";
+    cout << " | ";
+    cout << "Дата(Формата ДД/ММ/ГГГГ) ";
+    cout << " | ";
+    cout << "Вес ";
+    cout << " | ";
+    cout << "Стоимость тех осмотра ";
+    cout << endl;
+    for (int i = 0; i < *N; i++)
+    {
+        if (mBO[i].weightBO < weight && BO_DateCompare(mBO[i].date->date, date)) {
+            cout.width(2);
+            cout << i + 1 << ". ";
+            cout.width(16);
+            cout << mBO[i].numberBO;
+            cout.width(16);
+            cout << mBO[i].markaBO;
+            cout.width(22);
+            cout << mBO[i].date->date;
+            cout.width(15);
+            cout << mBO[i].weightBO;
+            cout.width(14);
+            cout << mBO[i].priceBO;
+            cout << endl;
+        }
+    }
+}
+bool BO_DateCompare(char date1[11], char date2[11]) {
+    int y = 0, d = 0, m = 0, Y = 0, D = 0, M = 0;
+    d = ((int)date1[0] - (int)'0') * 10 + (int)date1[1] - (int)'0';
+    m = ((int)date1[3] - (int)'0') * 10 + (int)date1[4] - (int)'0';
+    for (int i = 6; i <= 9; i++) {
+        y = y * 10 + (int)date1[i] - (int)'0';
+    }
+    D = ((int)date2[0] - (int)'0') * 10 + (int)date2[1] - (int)'0';
+    M = ((int)date2[3] - (int)'0') * 10 + (int)date2[4] - (int)'0';
+    for (int i = 6; i <= 9; i++) {
+        Y = Y * 10 + (int)date2[i] - (int)'0';
+    }
+    if (y > Y) {
+        return true;
+    }
+    else {
+        if (y == Y && m > M) {
+            return true;
+        }
+        else {
+            if (y == Y && m == M && d > D) {
+                return true;
+            }
+        }
+    }
+    return false;
+}

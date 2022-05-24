@@ -1,0 +1,77 @@
+// Белова Ольга Александровна, элб-4, В-2
+
+#include <iostream>
+#include <cmath>
+#include <ctime>
+
+using namespace std;
+
+
+void BO_random(int *arr, int n)
+{
+    srand(time(NULL));
+    for (int i = 0; i <= 10; i++) {
+    arr[i] = rand() % 11 - 6;
+    }
+}
+
+void BO_vvod(int* arr, int n) {
+for (int i = 0; i <= 10; i++) {
+cout << "Enter " << i << " - element of array: arr [" << i << "] = ";
+cin >> arr[i];
+}
+}
+
+void BO_vivod(int* arr, int n) {
+cout << "Array: { ";
+for (int i = 0; i <= 9; i++) {
+cout << arr[i] << "; ";
+}
+cout << arr[10] << " }" << endl;
+}
+
+void BO_sum(int* arr, int n) {
+int max = arr[0], s = 0;
+double avg, sum;
+for (int i = 1; i <= n - 1; i++) {
+if (abs(arr[i]) > abs(max)) {
+max = arr[i];
+}
+}
+for (int i = 1; i < 11; i += 2) {
+s += arr[i];
+}
+avg = s / 5.;
+cout << "The maximum modul of element: max = " << max << endl;
+cout << "The average of the elements: avg = " << avg << endl;
+sum = max + avg;
+cout << "Sum of the maximum modul of element and the average of the elements of the array: " << sum << endl;
+}
+int main()
+{
+int arr[11], ans;
+cout << "The array will be from:" << endl;
+cout << "1. Your choice" << endl;
+cout << "2. Randomly from the range [-6; 5]" << endl;
+cout << "Your choice: ";
+cin >> ans;
+cout << endl;
+if (ans == 1) {
+BO_vvod(arr, 11);
+BO_sum(arr, 11);
+}
+else {
+if (ans == 2) {
+BO_random(arr, 11);
+BO_vivod(arr, 11);
+BO_sum(arr, 11);
+}
+}
+return 0;
+}
+
+    
+    
+    
+    
+    
